@@ -5,5 +5,5 @@
  * @author nasci
  *
  */
-module EstudosJava {
+module ProjetoBancoJava {
 }
