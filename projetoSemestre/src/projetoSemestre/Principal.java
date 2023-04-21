@@ -60,21 +60,37 @@ public class Principal {
 	        try (Connection conn = DriverManager.getConnection(dbUrl, dbUser, dbPassword); 
 		        	BufferedReader buffer = new BufferedReader(new FileReader(csvCensoEscolar))) {
 		            String line;
+		            int contador = 0;
 		            boolean firstLine = true;
 		            while ((line = buffer.readLine()) != null) {
-		                if (firstLine) {
+		            	contador++;
+		            	System.out.println("Lendo linha : " + contador);
+		                
+		            	if (firstLine) {
 		                    firstLine = false;
 		                    continue;
 		                }
-		                
+		            
+		            	
 		                String[] fields = line.split(csvSeparator);
+		                
+		                  
+//		                for(int i = 0; i <= 13; i++) {	
+//		                	if(fields[i] == "" || fields[i] == null){
+//		                		fields[i] = "0";		                		
+//		                	}
+//		                	
+//		                	if(i == 13 && fields[i] == null || i == 13 && fields[i] == ""){
+//		                		fields[i] = "0";		                		
+//		                	}
+//		                }
 		                
 		                String sql = "INSERT INTO censo_escolar (ano, uf, id_municipio, id_escola, rede, ensino, anos_escolares, taxa_aprovacao"
 		                		+ ", indicador_rendimento, nota_saeb_mat, nota_saeb_pt, nota_saeb_mediap, ideb) VALUES "
-		                		+ "(?, ?, ?, ?, ?, ? ,? ,? ,? ,? , ?, ?, ?)";
+		                		+ "(?, ?, ?, ?, ?, ? ,? ,? ,? ,? , ?, ?, ?, ?)";
 		                PreparedStatement stmt = conn.prepareStatement(sql);
 		                
-//		                stmt.setInt(1, Integer.parseInt(fields[0]));
+//		                stmt.setInt(1, Integer.parseInt(fields[0]));,,,,,,,,,,,,,,,,,
 		                stmt.setString(1,(fields[0]));
 		                stmt.setString(2,(fields[1]));
 		                stmt.setInt(3, Integer.parseInt(fields[2]));
@@ -88,6 +104,8 @@ public class Principal {
 		                stmt.setBigDecimal(11, new BigDecimal(fields[10]));
 		                stmt.setBigDecimal(12, new BigDecimal(fields[11]));
 		                stmt.setBigDecimal(13, new BigDecimal(fields[12]));
+		                stmt.setString(14,(fields[13]));
+//		                stmt.setBigDecimal(14, new BigDecimal(fields[13]));
 		                
 		                
 		                
